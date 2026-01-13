@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class PasutijumuVesture {
     public static void main(String[] args) {
-        double sum = 0;
+        double kopa = 0;
         try(Scanner scan = new Scanner(new File("data/data.csv"))) {
                 scan.nextLine(); // skip header
                 while(scan.hasNextLine()) {
@@ -18,10 +18,10 @@ public class PasutijumuVesture {
                     String product = parts[2];
                     int quantity = Integer.valueOf(parts[3]);
                     double price = Double.valueOf(parts[4]);
-                    sum += quantity * price;
+                    kopa += quantity * price;
                     System.out.println("Pasutijums #"+id+": "+name+" pasutija "+quantity+" x "+product+" ("+price+" EUR) -> kopa: "+(quantity*price)+" EUR");
                 }
-                System.out.println("\nViss kopā: "+sum+" EUR");
+                System.out.println("\nViss kopā: "+kopa+" EUR");
             }
             catch(FileNotFoundException e) {
                 System.out.println("Error: " + e.getMessage());
