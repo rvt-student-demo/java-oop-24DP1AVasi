@@ -67,7 +67,7 @@ public class Registration {
     public void showStudents() {
         System.out.printf("%-15s %-15s %-25s %-15s %-20s%n",
                 "Name", "Surname", "Email", "Code", "Registered");
-        System.out.println("--------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------");
         for (Student s : students) {
             System.out.println(s);
         }
