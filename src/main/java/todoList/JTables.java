@@ -1,68 +1,43 @@
 package todoList;
 
-// Packages to import
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class JTables {
-    // frame
-    JFrame f;
-    // Table
-    JTable j;
+    private JFrame frame;
+    private JTable table;
+    private Sql sqlDatabase;
 
-    // Constructor
-    JTables()
-    {
-        // Frame initialization
-        f = new JFrame();
-
-        // Frame Title
-        f.setTitle("JTable");
-
-        // Load data from the project's todo.csv so the table shows current tasks
-        String[][] data = loadDataFromCsv("src/main/java/todoList/todo.csv");
-
-        // Column Names
-        String[] columnNames = { "id", "task"};
-
-        // Initializing the JTable
-        j = new JTable(data, columnNames);
-        j.setBounds(30, 40, 200, 300);
-
-        // adding it to JScrollPane
-        JScrollPane sp = new JScrollPane(j);
-        f.add(sp);
-        // Frame Size
-        f.setSize(500, 200);
-        // Frame Visible = true
-        f.setVisible(true);
+    public JTables() {
+        this(new Sql());
     }
 
-    private String[][] loadDataFromCsv(String path) {
-        List<String[]> rows = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
-            String line = reader.readLine(); // header line
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",", 2);
-                if (parts.length == 2) {
-                    rows.add(new String[] { parts[0].trim(), parts[1].trim() });
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return rows.toArray(new String[0][]);
+    public JTables(Sql sqlDatabase) {
+        this.sqlDatabase = sqlDatabase;
+        initializeUI();
     }
 
-    // Driver  method
-    public static void main(String[] args)
-    {
+    private void initializeUI() {
+        frame = new JFrame("Todo List Table");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        String[] columnNames = {"Id", "Task"};
+        Object[][] data = sqlDatabase.getAllTasksAsArray();
+
+        table = new JTable(data, columnNames);
+        table.setEnabled(false);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        frame.add(scrollPane);
+
+        frame.setSize(400, 300);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        Sql.initializeDatabase();
         new JTables();
     }
 }
