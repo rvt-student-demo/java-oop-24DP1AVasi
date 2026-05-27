@@ -43,7 +43,7 @@ public class UserInterface {
             }
 
             if (command.equals("table")) {
-                displayTable();
+                new JTables();
             }
 
             displayCommands();
@@ -58,23 +58,5 @@ public class UserInterface {
         System.out.println("  table  - Display tasks in a table");
         System.out.println("  stop   - Exit the program");
         System.out.println();
-    }
-
-    private void displayTable() {
-        JFrame frame = new JFrame("Todo List Table");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
-        String[] columnNames = {"#", "Task"};
-        Object[][] data = list.getAllTasksAsArray();
-        
-        JTable table = new JTable(data, columnNames);
-        table.setEnabled(false);
-        
-        JScrollPane scrollPane = new JScrollPane(table);
-        frame.add(scrollPane);
-        
-        frame.setSize(400, 300);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
     }
 }
