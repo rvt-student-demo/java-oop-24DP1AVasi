@@ -5,7 +5,10 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        TodoList list = new TodoList();
+        // Initialize database on startup
+        Sql.initializeDatabase();
+        
+        Sql list = new Sql();
         Scanner scanner = new Scanner(System.in);
 
         UserInterface ui = new UserInterface(list, scanner);
